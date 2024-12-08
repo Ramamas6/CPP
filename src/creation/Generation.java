@@ -49,6 +49,7 @@ public class Generation {
         int nbrObstacles = random.nextInt(minObstacles.apply(N), maxObstacles.apply(N));
         for (int n = 0; n < nbrObstacles; n ++)
             addObstacle(room, obstaclesSize.apply(N, n), rowSize, columnSize);
+        room.repaint();
         return room;
     }
 
