@@ -41,6 +41,7 @@ class Cell {
 
     void reset() {
         if (state == State.VISITED) state = State.FREE;
+        repaint();
     }
 
     void repaint(Color color) {

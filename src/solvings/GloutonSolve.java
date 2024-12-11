@@ -26,6 +26,11 @@ public class GloutonSolve implements Solving {
     }
 
     @Override
+    public String getName() {
+        return "Glouton";
+    }
+
+    @Override
     public void start(Point startingPoint) {
         toVisit.clear();
         visitedPoints.clear();

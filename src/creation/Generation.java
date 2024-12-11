@@ -94,10 +94,10 @@ public class Generation {
     public void setObstaclesSize (BiFunction<Integer, Integer, Integer> obstaclesSize) { this.obstaclesSize = obstaclesSize; }
 
     private void setDefaultFunctions() {
-        setMinRowSize(n -> 10*n);
-        setMaxRowSize(n -> 20*n);
-        setMinColumnSize(n -> 10*n);
-        setMaxColumnSize(n -> 20*n);
+        setMinRowSize(n -> 5*n);
+        setMaxRowSize(n -> 10*n);
+        setMinColumnSize(n -> 5*n);
+        setMaxColumnSize(n -> 10*n);
         setMinObstacles(_ -> 4);
         setMaxObstacles(n -> 5*n);
         setObstaclesSize((n, N) -> 2*N+3*n);
