@@ -12,9 +12,10 @@ import src.Point;
 
 public class Challenge {
 
+    private final Generation generation;
+    private final Room room;
+
     private int N;
-    private Generation generation;
-    private Room room;
     private Point initialPoint;
     private int goal;
 
@@ -25,8 +26,9 @@ public class Challenge {
     private int roamedCases;
 
     public Challenge(int N) {
-        this.N = N;
         this.generation = new Generation();
+        this.room = new Room();
+        this.N = N;
         currentPoint = new Point(0,0);
         newChallenge();
     }
@@ -34,7 +36,7 @@ public class Challenge {
     public void setN(int N) { this.N = N; }
 
     public void newChallenge() {
-        room = generation.generateMap(N);
+        generation.generateMap(room, N);
         initialPoint = generation.generationPosition(room);
         goal = calculatesBestResolution(initialPoint);
     }

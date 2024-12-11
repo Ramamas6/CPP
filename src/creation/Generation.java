@@ -35,12 +35,12 @@ public class Generation {
         return currentPoint;
     }
 
-    Room generateMap(int N) {
+    void generateMap(Room room, int N) {
         random = new Random();
         // Generate the map
         int rowSize = random.nextInt(minRowSize.apply(N), maxRowSize.apply(N));
         int columnSize = random.nextInt(minColumnSize.apply(N), maxColumnSize.apply(N));
-        Room room = new Room(rowSize, columnSize);
+        room.newRoom(rowSize, columnSize);
         // Cutting : cut some parts so the room is not a square
         cutting(room, 0, rowSize, columnSize);
         cutting(room, 1, rowSize, columnSize);
@@ -49,7 +49,6 @@ public class Generation {
         for (int n = 0; n < nbrObstacles; n ++)
             addObstacle(room, obstaclesSize.apply(N, n), rowSize, columnSize);
         room.buildPanel();
-        return room;
     }
 
     private void cutting(Room room, Integer mainDirection, int rowSize, int columnSize) {

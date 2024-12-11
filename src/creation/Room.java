@@ -14,12 +14,17 @@ class Room {
 
     private static int SQUARE_SIZE = 5;
 
+    private final JPanel jPanel;
+
     private int sizeX;
     private int sizeY;
     private Cell[][] room;
-    private final JPanel jPanel;
 
-    Room(int sizeX, int sizeY) {
+    Room() {
+        jPanel = new JPanel(new GridBagLayout());
+    }
+
+    void newRoom(int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.room = new Cell[sizeX][sizeY];
@@ -28,7 +33,6 @@ class Room {
                 this.room[i][j] = new Cell();
             }
         }
-        jPanel = new JPanel(new GridBagLayout());
     }
 
     void reset() {
@@ -42,33 +46,28 @@ class Room {
     int getRowSize() { return sizeX; }
     int getColumnSize() { return sizeY; }
 
-    private boolean contains(int row, int column) {
-        return (row >= 0 && column >= 0 && row < sizeX && column < sizeY);
+    boolean contains(Point point) {
+        return (point.x >= 0 && point.y >= 0 && point.x < sizeX && point.y < sizeY);
     }
-    boolean contains(Point point) { return contains(point.x, point.y); }
 
-    private boolean isFree(int row, int column) {
-        if (!contains(row, column)) return false;
-        return room[row][column].getAvailable();
+    boolean isFree(Point point) {
+        if (!contains(point)) return false;
+        return room[point.x][point.y].getAvailable();
     }
-    boolean isFree(Point point) { return isFree(point.x, point.y); }
 
-    private void setWall(int row, int column) {
-        if (!contains(row, column)) return;
-        room[row][column].setWall();
+    void setWall(Point point) {
+        if (!contains(point)) return;
+        room[point.x][point.y].setWall();
     }
-    void setWall(Point point) { setWall(point.x, point.y); }
     
-    private void setObstacle(int row, int column) {
-        if (contains(row, column)) room[row][column].setObstacle();
+    void setObstacle(Point point) {
+        if (contains(point)) room[point.x][point.y].setObstacle();
     }
-    void setObstacle(Point point) { setObstacle(point.x, point.y); }
 
-    private boolean setRoamed(int row, int column) {
-        if (!contains(row, column)) return false;
-        return room[row][column].setRoamed();
+    boolean setRoamed(Point point) {
+        if (!contains(point)) return false;
+        return room[point.x][point.y].setRoamed();
     }
-    boolean setRoamed(Point point) { return setRoamed(point.x, point.y); }
 
     void buildPanel() {
         jPanel.removeAll();
