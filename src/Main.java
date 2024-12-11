@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 import src.creation.Challenge;
 import src.solvings.GloutonSolve;
+import src.solvings.ShortestPathSolve;
 import src.solvings.Solving;
 
 public class Main {
@@ -17,7 +18,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        solving = new GloutonSolve();
+        solving = new ShortestPathSolve();
         challenge = new Challenge(4);
 
         Jframe = buildFrame();
