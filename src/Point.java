@@ -1,8 +1,12 @@
 package src;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Point {
-    public int x;
-    public int y;
+
+    public Integer x;
+    public Integer y;
     public boolean free;
 
     public Point(int x, int y) {
@@ -12,6 +16,20 @@ public class Point {
         this.x = x;
         this.y = y;
         this.free = free;
+    }
+
+    @Override
+    public int hashCode() {
+        return x + y * 100;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Point point = (Point) obj;
+        return x == point.x && y == point.y;
     }
 
     public int get(int index) {
@@ -30,5 +48,17 @@ public class Point {
         if (index == 0) x += valueToAdd;
         else if (index == 1) y += valueToAdd;
         else throw new IndexOutOfBoundsException("Index must be 0 or 1");
+    }
+
+    public List<Point> getSurroundingPoints() {
+        List<Point> listOfCases = new LinkedList<>();
+        for (int i = -1; i <= 1; i ++) {
+            for (int j = -1; j <= 1; j ++) {
+                if ((i != 0 || j != 0) && (Math.abs(i) + Math.abs(j) <= 1)) {
+                    listOfCases.add(new Point(x+i, y+j));
+                }
+            }
+        }
+        return listOfCases;
     }
 }

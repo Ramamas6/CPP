@@ -6,12 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.JPanel;
+
 import src.Point;
 
 public class Challenge {
 
-    private Generation generation;
     private int N;
+    private Generation generation;
     private Room room;
     private Point initialPoint;
     private int goal;
@@ -22,8 +24,11 @@ public class Challenge {
     private int cleanedCases;
     private int roamedCases;
 
-    public Challenge() {
+    public Challenge(int N) {
+        this.N = N;
         this.generation = new Generation();
+        currentPoint = new Point(0,0);
+        newChallenge();
     }
 
     public void setN(int N) { this.N = N; }
@@ -68,12 +73,14 @@ public class Challenge {
         // Add the case to the roamed cases
         if (room.setRoamed(newLocation)) cleanedCases += 1;
         roamedCases += 1;
+        Point oldPoint = new Point(currentPoint.x, currentPoint.y);
         currentPoint = newLocation;
         // return the cases next to it
-        for (Point p : nextCases(newLocation)) {
+        for (Point p : newLocation.getSurroundingPoints()) {
             p.free = room.isFree(p);
             nextPoints.add(p);
         }
+        room.repaint(oldPoint, currentPoint);
         return nextPoints;
     }
 
@@ -93,21 +100,12 @@ public class Challenge {
             Point newPoint = iterator.next();
             iterator.remove();
             visited.add(newPoint);
-            for (Point p : nextCases(newPoint))
+            for (Point p : newPoint.getSurroundingPoints())
                 if (room.isFree(p) && !visited.contains(p)) toVisit.add(p);
         }
         return visited.size();
     }
 
-    private List<Point> nextCases(Point point) {
-        List<Point> listOfCases = new ArrayList<>();
-        for (int i = -1; i <= 1; i ++) {
-            for (int j = -1; j <= 1; j ++) {
-                if ((i != 0 || j != 0) && (Math.abs(point.x - i) + Math.abs(point.y - j) <= 1)) {
-                    listOfCases.add(new Point(i, j));
-                }
-            }
-        }
-        return listOfCases;
-    }
+    public JPanel getRoomPanel() { return room.getJPanel(); }
+    public Generation getGeneration() { return generation; }
 }

@@ -20,11 +20,11 @@ public class Generation {
     private Function<Integer, Integer> maxObstacles;
     private BiFunction<Integer, Integer, Integer> obstaclesSize;
 
-    public Generation() {
+    Generation() {
         setDefaultFunctions();
     }
 
-    public Point generationPosition(Room room) {
+    Point generationPosition(Room room) {
         Point currentPoint = new Point(random.nextInt(room.getRowSize()), (random.nextInt(room.getColumnSize())));
         boolean flag = true;
         while (!room.isFree(currentPoint)) {
@@ -35,12 +35,11 @@ public class Generation {
         return currentPoint;
     }
 
-    public Room generateMap(int N) {
+    Room generateMap(int N) {
         random = new Random();
         // Generate the map
         int rowSize = random.nextInt(minRowSize.apply(N), maxRowSize.apply(N));
         int columnSize = random.nextInt(minColumnSize.apply(N), maxColumnSize.apply(N));
-        System.out.println(String.valueOf(rowSize) + " - " + String.valueOf(columnSize));
         Room room = new Room(rowSize, columnSize);
         // Cutting : cut some parts so the room is not a square
         cutting(room, 0, rowSize, columnSize);
@@ -49,7 +48,7 @@ public class Generation {
         int nbrObstacles = random.nextInt(minObstacles.apply(N), maxObstacles.apply(N));
         for (int n = 0; n < nbrObstacles; n ++)
             addObstacle(room, obstaclesSize.apply(N, n), rowSize, columnSize);
-        room.repaint();
+        room.buildPanel();
         return room;
     }
 
