@@ -2,7 +2,7 @@ package src.creation;
 
 import java.awt.Color;
 
-public enum State {
+enum State {
     WALL(false, Color.BLACK),
     OBSTACLE(false, Color.DARK_GRAY),
     VISITED(true, Color.GREEN),
@@ -16,6 +16,6 @@ public enum State {
         COLOR = color;
     }
 
-    public boolean getAvailable() { return AVAILABLE; }
-    public Color getColor() { return COLOR; }
+    boolean getAvailable() { return AVAILABLE; }
+    Color getColor() { return COLOR; }
 }

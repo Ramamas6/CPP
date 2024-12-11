@@ -10,22 +10,22 @@ import javax.swing.JPanel;
 
 import src.Point;
 
-public class Room {
+class Room {
 
-    private static int SQUARE_SIZE = 3;
+    private static int SQUARE_SIZE = 5;
 
     private int sizeX;
     private int sizeY;
-    private State[][] room;
+    private Cell[][] room;
     private final JPanel jPanel;
 
     Room(int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
-        this.room = new State[sizeX][sizeY];
+        this.room = new Cell[sizeX][sizeY];
         for (int i = 0; i < sizeX; i++) {
             for (int j = 0; j < sizeY; j++) {
-                this.room[i][j] = State.FREE;
+                this.room[i][j] = new Cell();
             }
         }
         jPanel = new JPanel(new GridBagLayout());
@@ -34,7 +34,7 @@ public class Room {
     void reset() {
         for (int i = 0; i < sizeX; i++) {
             for (int j = 0; j < sizeY; j++) {
-                if (this.room[i][j] == State.VISITED) this.room[i][j] = State.FREE;
+                this.room[i][j].reset();
             }
         }
     }
@@ -55,44 +55,51 @@ public class Room {
 
     private void setWall(int row, int column) {
         if (!contains(row, column)) return;
-        room[row][column] = State.WALL;
+        room[row][column].setWall();
     }
     void setWall(Point point) { setWall(point.x, point.y); }
     
     private void setObstacle(int row, int column) {
-        if (isFree(row, column)) room[row][column] = State.OBSTACLE;
+        if (contains(row, column)) room[row][column].setObstacle();
     }
     void setObstacle(Point point) { setObstacle(point.x, point.y); }
 
     private boolean setRoamed(int row, int column) {
-        if (!isFree(row, column)) return false;
-        if (room[row][column] == State.VISITED) return false;
-        room[row][column] = State.VISITED;
-        return true;
+        if (!contains(row, column)) return false;
+        return room[row][column].setRoamed();
     }
     boolean setRoamed(Point point) { return setRoamed(point.x, point.y); }
 
-    public void repaint() {
+    void buildPanel() {
         jPanel.removeAll();
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.weightx = 0;
+        gbc.weighty = 0;
         for (int i = 0; i < sizeX+2; i++) {
             for (int j = 0; j < sizeY+2; j++) {
-                JLabel label = new JLabel();
-                if (i == 0 || j == 0 || i == sizeX+1 || j == sizeY+1)
-                    label.setBackground(Color.BLACK);
-                else label.setBackground(room[i-1][j-1].getColor());
-                label.setOpaque(true);
-                label.setPreferredSize(new Dimension(SQUARE_SIZE, SQUARE_SIZE));
                 gbc.gridx = j;
                 gbc.gridy = i;
-                gbc.weightx = 0;
-                gbc.weighty = 0;
                 gbc.fill = GridBagConstraints.NONE;
-                jPanel.add(label, gbc);
+                if (i == 0 || j == 0 || i == sizeX+1 || j == sizeY+1) {
+                    JLabel label = new JLabel();
+                    label.setBackground(Color.BLACK);
+                    label.setOpaque(true);
+                    label.setPreferredSize(new Dimension(SQUARE_SIZE, SQUARE_SIZE));
+                    jPanel.add(label, gbc);
+                }
+                else {
+                    room[i-1][j-1].repaint();
+                    jPanel.add(room[i-1][j-1].getLabel(), gbc);
+                }
             }
         }
+    }
+
+    void repaint(Point oldPoint, Point currentPoint) {
+        room[oldPoint.x][oldPoint.y].repaint();
+        room[currentPoint.x][currentPoint.y].repaint(Color.RED);
         jPanel.revalidate();
         jPanel.repaint();
     }
-    public JPanel getJPanel() { return jPanel; }
+    JPanel getJPanel() { return jPanel; }
 }

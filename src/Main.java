@@ -4,19 +4,38 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
-import src.creation.Generation;
-import src.creation.Room;
+import src.creation.Challenge;
+import src.solvings.GloutonSolve;
+import src.solvings.Solving;
 
 public class Main {
 
+    private static JFrame Jframe;
+    private static Challenge challenge;
+    private static Solving solving;
+    
+
     public static void main(String[] args){
 
-        JFrame frame = buildFrame();
-        Generation generation = new Generation();
-        Room room = generation.generateMap(10);
-        frame.add(room.getJPanel(), BorderLayout.CENTER);
-        frame.setVisible(true);
+        solving = new GloutonSolve();
+        challenge = new Challenge(4);
+
+        Jframe = buildFrame();
+        Jframe.add(challenge.getRoomPanel(), BorderLayout.CENTER);
+        Jframe.setVisible(true);
+        solve();
 	}
+
+    private static void solve() {
+        Point nextPoint = challenge.start();
+        solving.start(nextPoint);
+        while (nextPoint != null) {
+            try { Thread.sleep(10); } catch (InterruptedException e) {}
+            nextPoint = solving.next(challenge.next(nextPoint));
+        }
+        System.out.println("END");
+        challenge.verif();
+    }
 
     private static JFrame buildFrame() {
         JFrame frame = new JFrame();
