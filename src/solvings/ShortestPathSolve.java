@@ -27,6 +27,11 @@ public class ShortestPathSolve implements Solving {
     }
 
     @Override
+    public String getName() {
+        return "Shortest Path";
+    }
+
+    @Override
     public void start(Point startingPoint) {
         toVisit.clear();
         visitedPoints.clear();

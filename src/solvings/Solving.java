@@ -17,4 +17,9 @@ public interface Solving {
      * and return the next cell (or null if the resolution is finished)
      */
     public Point next(List<Point> newDiscoveredPoints);
+
+    /*
+     * Used to make the selection of the solver
+     */
+    public String getName();
 }

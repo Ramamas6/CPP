@@ -15,9 +15,8 @@ public class Challenge {
     private final Generation generation;
     private final Room room;
 
-    private int N;
     private Point initialPoint;
-    private int goal;
+    private int casesNumber;
 
     private Point currentPoint;
     private int errors;
@@ -25,24 +24,16 @@ public class Challenge {
     private int cleanedCases;
     private int roamedCases;
 
-    public Challenge(int N) {
+    public Challenge() {
         this.generation = new Generation();
         this.room = new Room();
-        this.N = N;
         currentPoint = new Point(0,0);
-        newChallenge();
     }
 
-    public void setN(int N) { this.N = N; }
-
-    public void newChallenge() {
+    public void newChallenge(int N) {
         generation.generateMap(room, N);
         initialPoint = generation.generationPosition(room);
-        goal = calculatesBestResolution(initialPoint);
-    }
-    public void newChallenge(int N) {
-        setN(N);
-        newChallenge();
+        casesNumber = calculatesBestResolution(initialPoint);
     }
 
     public Point start() {
@@ -54,6 +45,16 @@ public class Challenge {
         currentPoint.x = initialPoint.x;
         currentPoint.y = initialPoint.y;
         return currentPoint;
+    }
+
+    public int getCleanedCases() {
+        return cleanedCases;
+    }
+    public int getRoamedCases() {
+        return roamedCases;
+    }
+    public int getCasesNumber() {
+        return casesNumber;
     }
 
     public List<Point> next(Point newLocation) {
@@ -90,7 +91,7 @@ public class Challenge {
     }
 
     public void verif() {
-        System.out.println("Cases cleaned : " + String.valueOf(cleanedCases) + " / " + String.valueOf(goal));
+        System.out.println("Cases cleaned : " + String.valueOf(cleanedCases) + " / " + String.valueOf(casesNumber));
         System.out.println("Roamed cases : " + String.valueOf(roamedCases));
         System.out.println("Errors : " + String.valueOf(errors));
         System.out.println("Walls : " + String.valueOf(walls));
