@@ -59,15 +59,18 @@ public class Challenge {
         // Check if newLocation is 1 case (or less) near last case
         if (Math.abs(currentPoint.x - newLocation.x) + Math.abs(currentPoint.y - newLocation.y) > 1) {
             errors += 1;
+            System.err.println("Error: new location unreachable");
             return nextPoints;
         }
         // Check if the case is available
         if (!room.contains(newLocation)) {
             errors += 1;
+            System.err.println("Error: new location not in the room");
             return nextPoints;
         }
         if (!room.isFree(newLocation)) {
             walls += 1;
+            System.err.println("Error: new location not free");
             return nextPoints;
         }
         // Add the case to the roamed cases
