@@ -9,4 +9,6 @@ public interface GuiListener {
     public void onResolutionPaused();
 
     public void onReset(Integer solverIndex);
+
+    public void onDiagonalMovementChanged(Boolean allowDiagonalMovement);
 }

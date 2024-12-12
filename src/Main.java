@@ -42,6 +42,11 @@ public class Main implements GuiListener {
 
     private void initNewSolving(int N) {
         challenge.newChallenge(N);
+        initNewSolving();
+    }
+
+    private void initNewSolving() {
+        challenge.refreshBestResolution();
         gui.start(challenge.getCasesNumber());
         solvingStarted = false;
     }
@@ -93,5 +98,12 @@ public class Main implements GuiListener {
         running = false;
         currentSolver = solvers.get(solverIndex);
         newSolving();
+    }
+
+    @Override
+    public void onDiagonalMovementChanged(Boolean allowDiagonalMovement) {
+        running = false;
+        Point.diagonalMovementAllowed = allowDiagonalMovement;
+        initNewSolving();
     }
 }

@@ -8,14 +8,14 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GuiMain {
+public class GuiStats {
 
     private final JPanel jPanel;
     private JLabel textCleanedCases;
     private JLabel textRoamedCases;
     private int goalCellNumber;
 
-    public GuiMain() {
+    public GuiStats() {
         jPanel = buildPanel();
         buildWidgets();
     }
