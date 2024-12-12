@@ -33,6 +33,9 @@ public class Challenge {
     public void newChallenge(int N) {
         generation.generateMap(room, N);
         initialPoint = generation.generationPosition(room);
+    }
+
+    public void refreshBestResolution() {
         casesNumber = calculatesBestResolution(initialPoint);
     }
 
@@ -47,20 +50,10 @@ public class Challenge {
         return currentPoint;
     }
 
-    public int getCleanedCases() {
-        return cleanedCases;
-    }
-    public int getRoamedCases() {
-        return roamedCases;
-    }
-    public int getCasesNumber() {
-        return casesNumber;
-    }
-
     public List<Point> next(Point newLocation) {
         List<Point> nextPoints = new ArrayList<>();
         // Check if newLocation is 1 case (or less) near last case
-        if (Math.abs(currentPoint.x - newLocation.x) + Math.abs(currentPoint.y - newLocation.y) > 1) {
+        if (!currentPoint.equals(newLocation) && !currentPoint.getSurroundingPoints().contains(newLocation)) {
             errors += 1;
             System.err.println("Error: new location unreachable");
             return nextPoints;
@@ -95,6 +88,16 @@ public class Challenge {
         System.out.println("Roamed cases : " + String.valueOf(roamedCases));
         System.out.println("Errors : " + String.valueOf(errors));
         System.out.println("Walls : " + String.valueOf(walls));
+    }
+
+    public int getCleanedCases() {
+        return cleanedCases;
+    }
+    public int getRoamedCases() {
+        return roamedCases;
+    }
+    public int getCasesNumber() {
+        return casesNumber;
     }
 
     private int calculatesBestResolution(Point startingPoint) {

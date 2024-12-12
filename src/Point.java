@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Point {
 
+    public static boolean diagonalMovementAllowed = false;
+
     public Integer x;
     public Integer y;
     public boolean free;
@@ -32,6 +34,11 @@ public class Point {
         return x == point.x && y == point.y;
     }
 
+    @Override
+    public String toString() {
+        return "("+x+","+y+")";
+    }
+
     public int get(int index) {
         if (index == 0) return x;
         if (index == 1) return y;
@@ -54,7 +61,7 @@ public class Point {
         List<Point> listOfCases = new LinkedList<>();
         for (int i = -1; i <= 1; i ++) {
             for (int j = -1; j <= 1; j ++) {
-                if ((i != 0 || j != 0) && (Math.abs(i) + Math.abs(j) <= 1)) {
+                if ((i != 0 || j != 0) && (diagonalMovementAllowed || Math.abs(i) + Math.abs(j) <= 1)) {
                     listOfCases.add(new Point(x+i, y+j));
                 }
             }
