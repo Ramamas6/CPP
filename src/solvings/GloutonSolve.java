@@ -75,7 +75,7 @@ public class GloutonSolve implements Solving {
     }
 
     private Point getNextPoint() {
-        if (Math.abs(currentPoint.x-goalPoint.x) + Math.abs(currentPoint.y-goalPoint.y) < 2) return goalPoint;
+        if (currentPoint.getSurroundingPoints().contains(goalPoint))return goalPoint;
         return findNextPath(goalPoint);
     }
 
@@ -89,12 +89,13 @@ public class GloutonSolve implements Solving {
      * @return the next cell to go to reach the destination, or null if no cell found
      */
     private Point findNextPath(Point destination) {
+        List<Point> surroundingPoints = currentPoint.getSurroundingPoints();
         ArrayList<Point> liste = new ArrayList<>();
         liste.add(destination);
         int index = 0;
         while (index < liste.size()) {
             Point newPoint = liste.get(index);
-            if (Math.abs(currentPoint.x-newPoint.x) + Math.abs(currentPoint.y-newPoint.y) < 2) return newPoint;
+            if (surroundingPoints.contains(newPoint)) return newPoint;
             for (Point p: newPoint.getSurroundingPoints())
                 if (!liste.contains(p) && knownPoints.containsKey(p)) liste.add(p);
             index += 1;
