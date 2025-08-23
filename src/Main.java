@@ -6,6 +6,7 @@ import src.creation.Challenge;
 import src.gui.Gui;
 import src.gui.GuiListener;
 import src.solvings.GloutonSolve;
+import src.solvings.PriorityDirectionSolve;
 import src.solvings.ShortestPathSolve;
 import src.solvings.Solving;
 
@@ -37,6 +38,7 @@ public class Main implements GuiListener {
     private void insertSolvers() {
         solvers.add(new GloutonSolve());
         solvers.add(new ShortestPathSolve());
+        solvers.add(new PriorityDirectionSolve());
         currentSolver = solvers.get(0);
     }
 
