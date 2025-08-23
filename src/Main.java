@@ -67,7 +67,7 @@ public class Main implements GuiListener {
                 if (nextPoint != null) {
                     try { Thread.sleep(period); } catch (InterruptedException e) {}
                     nextPoint = currentSolver.next(challenge.next(nextPoint));
-                    gui.actualise(challenge.getCleanedCases(), challenge.getRoamedCases());
+                    gui.actualise(challenge.getCleanedCases(), challenge.getRoamedCases(), challenge.getRotations());
                 }
                 else {
                     running = false;

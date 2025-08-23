@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.swing.JPanel;
 
+import src.Direction;
 import src.Point;
 
 public class Challenge {
@@ -19,15 +20,18 @@ public class Challenge {
     private int casesNumber;
 
     private Point currentPoint;
+    private Direction currentDirection;
     private int errors;
     private int walls;
     private int cleanedCases;
     private int roamedCases;
+    private int rotations;
 
     public Challenge() {
         this.generation = new Generation();
         this.room = new Room();
         currentPoint = new Point(0,0);
+        currentDirection = new Direction(0, 0);
     }
 
     public void newChallenge(int N) {
@@ -45,8 +49,10 @@ public class Challenge {
         walls = 0;
         cleanedCases = 0;
         roamedCases = 0;
+        rotations = 0;
         currentPoint.x = initialPoint.x;
         currentPoint.y = initialPoint.y;
+        currentDirection = new Direction(0, 0);
         return currentPoint;
     }
 
@@ -71,6 +77,10 @@ public class Challenge {
             System.err.println("Error: new location not free");
             return nextPoints;
         }
+        // Calculates direction
+        Direction newDirection = new Direction(currentPoint, newLocation);
+        rotations += newDirection.getRotation(currentDirection);
+        currentDirection = newDirection;
         // Add the case to the roamed cases
         if (room.setRoamed(newLocation)) cleanedCases += 1;
         roamedCases += 1;
@@ -88,6 +98,7 @@ public class Challenge {
     public void verif() {
         System.out.println("Cases cleaned : " + String.valueOf(cleanedCases) + " / " + String.valueOf(casesNumber));
         System.out.println("Roamed cases : " + String.valueOf(roamedCases));
+        System.out.println("Rotations : " + String.valueOf(rotations));
         System.out.println("Errors : " + String.valueOf(errors));
         System.out.println("Walls : " + String.valueOf(walls));
     }
@@ -98,6 +109,11 @@ public class Challenge {
     public int getRoamedCases() {
         return roamedCases;
     }
+
+    public int getRotations() {
+        return rotations;
+    }
+
     public int getCasesNumber() {
         return casesNumber;
     }

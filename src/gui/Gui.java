@@ -30,8 +30,8 @@ public class Gui {
         repaint();
     }
 
-    public void actualise(int cleanedCases, int roamedCases) {
-        guiStats.updateTexts(cleanedCases, roamedCases);
+    public void actualise(int cleanedCases, int roamedCases, int rotations) {
+        guiStats.updateTexts(cleanedCases, roamedCases, rotations);
     }
 
     public void setVisible() {

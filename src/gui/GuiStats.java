@@ -13,6 +13,7 @@ public class GuiStats {
     private final JPanel jPanel;
     private JLabel textCleanedCases;
     private JLabel textRoamedCases;
+    private JLabel textRotations;
     private int goalCellNumber;
 
     public GuiStats() {
@@ -24,16 +25,17 @@ public class GuiStats {
         return jPanel;
     }
 
-    public void updateTexts(int cleanedCases, int roamedCases) {
+    public void updateTexts(int cleanedCases, int roamedCases, int rotations) {
         textCleanedCases.setText(cleanedCases + " / " + goalCellNumber
-                        + " (" + 100*cleanedCases/goalCellNumber + "%)");
+                        + " (" + 100*cleanedCases/goalCellNumber + "%) ");
         if (cleanedCases == 0) cleanedCases += 1;
-        textRoamedCases.setText(roamedCases + " (" + 100*roamedCases/cleanedCases + "%)");
+        textRoamedCases.setText(roamedCases + " (" + 100*roamedCases/cleanedCases + "%) ");
+        textRotations.setText(rotations + " ");
     }
 
     public void start(int goalCellNumber) {
         this.goalCellNumber = goalCellNumber;
-        updateTexts(0, 0);
+        updateTexts(0, 0, 0);
     }
 
     private JPanel buildPanel() {
@@ -47,6 +49,7 @@ public class GuiStats {
         GridBagConstraints gbc = new GridBagConstraints();
         buildTextCleanedCases(gbc);
         buildTextRoamedCases(gbc);
+        buildTextRotations(gbc);
     }
 
     private void buildTextCleanedCases(GridBagConstraints gbc) {
@@ -70,5 +73,17 @@ public class GuiStats {
         textRoamedCases = new JLabel("");
         textRoamedCases.setFont(new Font("Arial", Font.BOLD, 24));
         jPanel.add(textRoamedCases, gbc);
+    }
+
+    private void buildTextRotations(GridBagConstraints gbc) {
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        JLabel newLabel = new JLabel("Rotations : ");
+        newLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        jPanel.add(newLabel, gbc);
+        gbc.gridx = 3;
+        textRotations = new JLabel("");
+        textRotations.setFont(new Font("Arial", Font.BOLD, 24));
+        jPanel.add(textRotations, gbc);
     }
 }
