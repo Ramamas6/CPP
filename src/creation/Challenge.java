@@ -56,6 +56,8 @@ public class Challenge {
         if (!currentPoint.equals(newLocation) && !currentPoint.getSurroundingPoints().contains(newLocation)) {
             errors += 1;
             System.err.println("Error: new location unreachable");
+            System.out.println(currentPoint);
+            System.out.println(newLocation);
             return nextPoints;
         }
         // Check if the case is available

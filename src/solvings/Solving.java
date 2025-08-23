@@ -5,6 +5,7 @@ import java.util.List;
 import src.Point;
 
 public interface Solving {
+    
     /*
      * Function called at the start of a resolution
      * to initiate the algorithm with the starting point
